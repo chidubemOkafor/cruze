@@ -1,0 +1,23 @@
+{% extends "base.html" %} {% block content %}
+
+<div
+  class="flex gap-3 h-screen flex-col justify-center items-center text-gray-700"
+>
+  <h1 class="text-2xl font-semibold">New Post</h1>
+
+  <form
+    method="POST"
+    enctype="multipart/form-data"
+    class="flex flex-col gap-10"
+  >
+    {% csrf_token %} {{form.media}} {{form.image}} {{form.description}}
+
+    <button
+      type="submit"
+      class="py-2 px-5 rounded-md font-semibold text-white cursor-pointer hover:bg-blue-400 bg-blue-500"
+    >
+      Post
+    </button>
+  </form>
+</div>
+{% endblock %}

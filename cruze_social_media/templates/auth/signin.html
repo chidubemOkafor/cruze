@@ -1,0 +1,50 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.15/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <title>Home</title>
+  </head>
+  <body class="w-screen flex justify-center items-center bg-blue-400 h-screen">
+    <form
+      class="bg-white rounded-md shadow-md text-gray-700 flex flex-col justify-center p-10 gap-5"
+      method="POST"
+    >
+      {% csrf_token %}
+      <div class="w-64">
+        <label class="text-xl" for="email">Email</label><br />
+        <input
+          type="text"
+          id="text"
+          class="w-full h-10 pl-2 bg-gray-100"
+          placeholder="samsmith@gmail.com"
+          name="email"
+        />
+      </div>
+      <div class="w-64">
+        <label class="text-xl" for="password">Password</label><br />
+        <input
+          type="password"
+          id="text"
+          class="w-full h-10 pl-2 bg-gray-100"
+          name="password"
+        />
+      </div>
+      <div class="flex justify-between">
+        <p>Don't have an account</p>
+        <a href="http://127.0.0.1:8000/signup/">Sign up</a>
+      </div>
+      <button
+        class="text-white font-semibold hover:bg-blue-300 w-full bg-blue-400 rounded-md shadow-md py-4"
+      >
+        Login
+      </button>
+    </form>
+  </body>
+</html>

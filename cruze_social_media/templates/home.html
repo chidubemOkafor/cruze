@@ -1,0 +1,147 @@
+{% extends "base.html" %} {% block content %} {% load static%}
+<!-- Profile-specific content goes here -->
+
+<div class="flex flex-col justify-center items-center text-gray-700">
+  <div
+    class="border-b-2 border-gray-200 w-full flex justify-center p-5 fixed top-0 bg-white z-index-10"
+  >
+    <h1 class="font-semibold text-2xl">Trending</h1>
+  </div>
+
+  <div class="flex flex-col mt-32" id="posts">
+    {% for post in posts %}
+    <div>
+
+        <div class="flex gap-1 items-center mb-3" id="poster_tag">
+          <img
+            class="w-12 h-12 rounded-full border border-2px border-gray-500"
+            src="https://images.pexels.com/photos/4127941/pexels-photo-4127941.jpeg?auto=compress&cs=tinysrgb&w=600"
+          />
+          <div>
+            <p class="text-xl font-bold">@{{post.author}}</p>
+            <p class="text-sm font-semibold text-gray-500">{{post.on_created|date:"F d, Y"}}</p>
+          </div>
+        </div>
+
+          <p class="text-gray-800 font-semibold w-96 pb-5">{{post.description}}</p>
+
+          {% if post.image %}
+        <img class="h-96 w-96 rounded-md" id="image" src="{{post.image.url}}" />
+      {% else %}
+        <!-- Display a default or placeholder image here -->
+        <img class="h-96 w-96 rounded-md" id="image" src="" />
+      {% endif %}
+        </div>
+        <div class="flex flex-col gap-0" id="discriptions_and_comments">
+          <div class="flex justify-evenly my-2">
+            <div class="flex items-center gap-2">
+              <form method="POST">
+                {% csrf_token %}
+                {% if user in post.likes.all %}
+                <button type="submit" class="liked">
+              <svg
+                id="like_button"
+                style="fill: black;"
+                width="30px"
+                height="30px"
+                class="cursor-pointer"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M8 10V20M8 10L4 9.99998V20L8 20M8 10L13.1956 3.93847C13.6886 3.3633 14.4642 3.11604 15.1992 3.29977L15.2467 3.31166C16.5885 3.64711 17.1929 5.21057 16.4258 6.36135L14 9.99998H18.5604C19.8225 9.99998 20.7691 11.1546 20.5216 12.3922L19.3216 18.3922C19.1346 19.3271 18.3138 20 17.3604 20L8 20"
+                  stroke="#000000"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </button>
+              {% else %}
+              <button type="submit" class="like">
+              <svg
+              id="like_button"
+              style="fill: white;"
+              width="30px"
+              height="30px"
+              class="cursor-pointer"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M8 10V20M8 10L4 9.99998V20L8 20M8 10L13.1956 3.93847C13.6886 3.3633 14.4642 3.11604 15.1992 3.29977L15.2467 3.31166C16.5885 3.64711 17.1929 5.21057 16.4258 6.36135L14 9.99998H18.5604C19.8225 9.99998 20.7691 11.1546 20.5216 12.3922L19.3216 18.3922C19.1346 19.3271 18.3138 20 17.3604 20L8 20"
+                stroke="#000000"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </button>
+            {% endif %}
+          </form>
+              <span id="like_counter" class="font-semibold text-xl">0</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <a href="{% url 'cruze_social_media:display_comments' pk=post.pk %}">
+              <svg
+                class="cursor-pointer"
+                width="30px"
+                height="30px"
+                viewBox="0 -0.5 25 25"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M18.1 5.00016H6.9C6.53425 4.99455 6.18126 5.13448 5.9187 5.38917C5.65614 5.64385 5.50553 5.99242 5.5 6.35816V14.5002C5.50553 14.8659 5.65614 15.2145 5.9187 15.4692C6.18126 15.7238 6.53425 15.8638 6.9 15.8582H10.77C10.9881 15.857 11.2035 15.9056 11.4 16.0002L17.051 19.0002L17 14.5002H18.43C19.0106 14.5091 19.4891 14.0467 19.5 13.4662V6.35816C19.4945 5.99242 19.3439 5.64385 19.0813 5.38917C18.8187 5.13448 18.4657 4.99455 18.1 5.00016Z"
+                  stroke="#000000"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M8.5 8.25024C8.08579 8.25024 7.75 8.58603 7.75 9.00024C7.75 9.41446 8.08579 9.75024 8.5 9.75024V8.25024ZM16.5 9.75024C16.9142 9.75024 17.25 9.41446 17.25 9.00024C17.25 8.58603 16.9142 8.25024 16.5 8.25024V9.75024ZM8.5 11.2502C8.08579 11.2502 7.75 11.586 7.75 12.0002C7.75 12.4145 8.08579 12.7502 8.5 12.7502V11.2502ZM14.5 12.7502C14.9142 12.7502 15.25 12.4145 15.25 12.0002C15.25 11.586 14.9142 11.2502 14.5 11.2502V12.7502ZM8.5 9.75024H16.5V8.25024H8.5V9.75024ZM8.5 12.7502H14.5V11.2502H8.5V12.7502Z"
+                  fill="#000000"
+                />
+              </svg>
+            </a>
+              <span id="like_counter" class="font-semibold text-xl">{{post.comment_count}}</span>
+            </div>
+            <div class="flex items-center gap-2">
+              
+              <svg
+                width="30px"
+                height="30px"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <circle cx="12" cy="12" r="4" fill="#33363F" />
+                <path
+                  d="M21 12C21 12 20 4 12 4C4 4 3 12 3 12"
+                  stroke="#33363F"
+                  stroke-width="2"
+                />
+              </svg>
+   
+              <span id="like_counter" class="font-semibold text-xl">{{post.views}}</span>
+            </div>
+          </div>
+          <form method="POST">
+            <input
+              type="text"
+              class="h-10 w-full border-b-2 border-gray-200 pl-10 focus:outline-none mb-10"
+              placeholder="enter your comment"
+            />
+          </form>
+        </div>
+
+        {% endfor %}
+      </div>
+    </div>
+    {% endblock %}
+  </div>
+</div>

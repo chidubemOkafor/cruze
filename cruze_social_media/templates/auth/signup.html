@@ -1,0 +1,25 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="{% static 'home.css'%}" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.15/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <title>Home</title>
+  </head>
+  <body class="w-screen flex justify-center items-center bg-blue-400 h-screen">
+    <form
+      id="form"
+      class="bg-white rounded-md shadow-md text-gray-700 flex flex-col justify-center p-10"
+      method="POST"
+    >
+      {% csrf_token %} {{form}}
+      <button class="">Create Account</button>
+    </form>
+  </body>
+</html>

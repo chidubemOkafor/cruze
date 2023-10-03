@@ -1,0 +1,75 @@
+{% extends "base.html" %} {% block content %}
+
+<div class="flex justify-evenly items-center gap-5" id="post_card">
+  <div>
+    <div class="flex gap-1 items-center mb-3" id="poster_tag">
+      <img
+        class="w-12 h-12 rounded-full border border-2px border-gray-500"
+        src="https://images.pexels.com/photos/4127941/pexels-photo-4127941.jpeg?auto=compress&cs=tinysrgb&w=600"
+      />
+      <div>
+        <p class="text-xl font-bold">@{{post.author}}</p>
+        <p class="text-sm font-semibold text-gray-500">
+          {{post.on_created|date:"F d, Y"}}
+        </p>
+      </div>
+    </div>
+    <img
+      class="w-96 h-96 rounded-md shadow-lg"
+      src="{{post.image.url}}"
+      id="image_card"
+    />
+  </div>
+  <div class="flex flex-col justify-between" id="comments_card">
+    <div class="flex justify-center items-center p-4 border-b border-gray-200">
+      {{post.description}}
+    </div>
+
+    <div class="flex flex-col justify-between top-0" id="comment_card">
+      {% if comments %} {% for comment in comments %}
+      <div class="" id="comment_box">
+        <div class="p-3 flex gap-4" id="box">
+          <img
+            class="w-10 h-10 rounded-full border border-2px border-gray-500"
+            src="https://images.pexels.com/photos/4127941/pexels-photo-4127941.jpeg?auto=compress&cs=tinysrgb&w=600"
+          />
+          <div>
+            <div class="flex gap-3">
+              <span>
+                <p class="font-semibold">@{{comment.author}}</p>
+                {{comment.text}}
+              </span>
+            </div>
+            <p class="text-sm text-gray-400">2 days</p>
+          </div>
+        </div>
+      </div>
+      {% endfor %} {% else %}
+      <div class="font-semibold text-gray-400 flex justify-center">
+        No Comment yet
+      </div>
+      {% endif %}
+    </div>
+    <form
+      method="POST"
+      enctype="multipart/form-data"
+      class="w-full border-t border-gray-200"
+      id="text_form"
+    >
+      {% csrf_token %}
+      <div
+        class="py-2 w-full flex items-center justify-evenly"
+        id="main_comment_div"
+      >
+        {{form}}
+        <button
+          type="submit"
+          class="bg-blue-500 hover:bg-blue-400 rounded-md py-2 px-5 text-white font-semibold"
+        >
+          send
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

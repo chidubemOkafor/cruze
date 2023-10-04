@@ -7,16 +7,16 @@ venv/
 venv2/
 
 # Ignore database files
-db.sqlite3
+
 
 # Ignore environment-specific settings
 *.env
 
 # Ignore media files (uploaded user content)
-media/
+
 
 # Ignore static files (collected using `collectstatic`)
-static/
+
 
 # Ignore log files
 *.log
